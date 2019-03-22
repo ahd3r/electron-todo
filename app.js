@@ -19,6 +19,9 @@ app.on('ready',()=>{
     Menu.setApplicationMenu(null);
   }
   mainWin = new BrowserWindow({});
+  mainWin.on('closed',()=>{
+    app.quit();
+  });
   mainWin.loadURL(url.format({
     protocol:'file',
     pathname: path.resolve(__dirname,'auth.html')

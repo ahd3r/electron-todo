@@ -36,6 +36,11 @@ if(myTasks.length===0){
   list.className = 'list-group';
   myTasks.forEach((myTask,ind)=>{
     const task = document.createElement('li');
+    if(ind & 1){
+      task.style.background='rgb(196, 196, 196)';
+    }else{
+      task.style.background='rgb(167, 167, 167)';
+    }
     if(myTask.done){
       task.className = `list-group-item t-${tasks.indexOf(myTask)} done`;
     }else{
@@ -63,11 +68,21 @@ if(myTasks.length===0){
 
 document.querySelector('#addTask').addEventListener('submit',(e)=>{
   const taskCall = document.querySelector('#addTask>div>input').value;
-  if(taskCall){
+  if(taskCall && taskCall.length<=40 && myTasks.length<30){
     tasks.push({call:taskCall,done:false,user:curUserId});
     localStorage.setItem('tasks',JSON.stringify(tasks));
     ipcRenderer.send('entered');
-  }else{
+  }else if(myTasks.length>30){
+    helpers.showAlert('Make it less, Slavik)','red');
+    setTimeout(()=>{
+      document.querySelector('.alert').remove();
+    },3000);
+  }else if(taskCall.length>40){
+    helpers.showAlert('Make it less, Slavik)','red');
+    setTimeout(()=>{
+      document.querySelector('.alert').remove();
+    },3000);
+  }else if(!taskCall){
     helpers.showAlert('Type some call for task','red');
     setTimeout(()=>{
       document.querySelector('.alert').remove();
