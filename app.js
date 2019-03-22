@@ -2,7 +2,7 @@ const { app,BrowserWindow,Menu,ipcMain } = require('electron');
 const url = require('url');
 const path = require('path');
 
-process.env.NODE_ENV = 'dev';
+process.env.NODE_ENV = 'prod';
 
 let mainWin;
 const devMenu = [{
