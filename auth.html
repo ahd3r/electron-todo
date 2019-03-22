@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ToDo</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css">
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+    <a class="navbar-brand m-auto">TODO</a>
+  </nav>
+  <div class="container">
+    <div style="background:rgb(218, 218, 218)" class="row rounded mb-2 pt-2 pb-2">
+      <div class="col login">
+        <h3 class="text-center">LogIn</h3>
+        <form id="loginF" class="mb-2">
+          <input type="text" class="form-control mb-2" placeholder="Username">
+          <input type="password" class="form-control mb-2" placeholder="Password">
+          <input type="submit" class="btn btn-primary" value="LogIn">
+        </form>
+        <a id="forgetPass">Forget password</a>
+      </div>
+      <div class="col signup">
+        <h3 class="text-center">SignUp</h3>
+        <form id="signupF">
+          <input type="text" class="form-control mb-2" placeholder="Username">
+          <input type="text" class="form-control mb-2" placeholder="Secret word">
+          <input type="password" class="form-control mb-2" placeholder="Password">
+          <input type="password" class="form-control mb-2" placeholder="Confirm password">
+          <input type="submit" class="btn btn-primary" value="SignUp">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

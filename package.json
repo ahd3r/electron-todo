@@ -1,0 +1,14 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "Todo for univer",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Ander and Slavik",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^4.1.1"
+  }
+}
