@@ -1,5 +1,4 @@
 const { app,BrowserWindow,Menu,ipcMain } = require('electron');
-const url = require('url');
 const path = require('path');
 
 process.env.NODE_ENV = 'prod';
@@ -18,33 +17,24 @@ app.on('ready',()=>{
   }else if(process.env.NODE_ENV==='prod'){
     Menu.setApplicationMenu(null);
   }
-  mainWin = new BrowserWindow({});
-  mainWin.on('closed',()=>{
+  mainWin = new BrowserWindow({show:false,resizable:false,useContentSize:true});
+  mainWin.once('ready-to-show',()=>{
+    mainWin.show();
+  });
+  mainWin.once('closed',()=>{
     app.quit();
   });
-  mainWin.loadURL(url.format({
-    protocol:'file',
-    pathname: path.resolve(__dirname,'auth.html')
-  }));
+  mainWin.loadFile(path.resolve(__dirname,'auth.html'));
 });
 
 ipcMain.on('entered',()=>{
-  mainWin.loadURL(url.format({
-    protocol:'file',
-    pathname: path.resolve(__dirname,'main.html')
-  }));
+  mainWin.loadFile(path.resolve(__dirname,'main.html'));
 });
 
 ipcMain.on('reset',()=>{
-  mainWin.loadURL(url.format({
-    protocol:'file',
-    pathname: path.resolve(__dirname,'reset.html')
-  }));
+  mainWin.loadFile(path.resolve(__dirname,'reset.html'));
 });
 
 ipcMain.on('back',()=>{
-  mainWin.loadURL(url.format({
-    protocol:'file',
-    pathname: path.resolve(__dirname,'auth.html')
-  }));
+  mainWin.loadFile(path.resolve(__dirname,'auth.html'));
 });
