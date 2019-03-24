@@ -32,6 +32,7 @@ if(myTasks.length===0){
       myTasks=myTasks.slice(parseInt(page)*5-5,parseInt(page)*5);
     }
   }
+  helpers.delBtn();
   const list = document.createElement('ul');
   list.className = 'list-group';
   myTasks.forEach((myTask,ind)=>{
@@ -67,12 +68,17 @@ if(myTasks.length===0){
 }
 
 document.querySelector('#addTask').addEventListener('submit',(e)=>{
+  const allMyTasks = tasks.filter(task=>{
+    if(task.user === curUserId){
+      return true
+    }
+  });
   const taskCall = document.querySelector('#addTask>div>input').value;
-  if(taskCall && taskCall.length<=40 && myTasks.length<30){
+  if(taskCall && taskCall.length<=40 && allMyTasks.length<20){
     tasks.push({call:taskCall,done:false,user:curUserId});
     localStorage.setItem('tasks',JSON.stringify(tasks));
     ipcRenderer.send('entered');
-  }else if(myTasks.length>30){
+  }else if(allMyTasks.length>=20){
     helpers.showAlert('Make it less, Slavik)','red');
     setTimeout(()=>{
       document.querySelector('.alert').remove();
@@ -96,22 +102,24 @@ document.querySelector('#logoutP').addEventListener('click',()=>{
   ipcRenderer.send('back');
 });
 
-document.querySelector('#delAll').addEventListener('click',()=>{
-  const withoutMyTasks = tasks.filter(task=>{
-    if(task.user!==curUserId){
-      return true
-    }
+if(document.querySelector('#delAll') && document.querySelector('#delDone')){
+  document.querySelector('#delAll').addEventListener('click',()=>{
+    const withoutMyTasks = tasks.filter(task=>{
+      if(task.user!==curUserId){
+        return true
+      }
+    });
+    localStorage.setItem('tasks',JSON.stringify(withoutMyTasks));
+    ipcRenderer.send('entered');
   });
-  localStorage.setItem('tasks',JSON.stringify(withoutMyTasks));
-  ipcRenderer.send('entered');
-});
-
-document.querySelector('#delDone').addEventListener('click',()=>{
-  const withoutMyDone=tasks.filter(task=>{
-    if(task.user!==curUserId || !task.done){
-      return true
-    }
+  
+  document.querySelector('#delDone').addEventListener('click',()=>{
+    const withoutMyDone=tasks.filter(task=>{
+      if(task.user!==curUserId || !task.done){
+        return true
+      }
+    });
+    localStorage.setItem('tasks',JSON.stringify(withoutMyDone));
+    ipcRenderer.send('entered');
   });
-  localStorage.setItem('tasks',JSON.stringify(withoutMyDone));
-  ipcRenderer.send('entered');
-});
+}

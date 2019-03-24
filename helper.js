@@ -33,6 +33,23 @@ class Help{
     }
     document.querySelector('body').insertBefore(pag,document.querySelector('script'));
   }
+  delBtn(){
+    const btn = document.createElement('div');
+    btn.className='row';
+    const delAll = document.createElement('div');
+    delAll.className = 'col text-right';
+    delAll.appendChild(document.createElement('a')).textContent = 'Delete All';
+    delAll.querySelector('a').className='btn btn-light';
+    delAll.querySelector('a').setAttribute('id','delAll');
+    const delDone = document.createElement('div');
+    delDone.className = 'col';
+    delDone.appendChild(document.createElement('a')).textContent = 'Delete Done';
+    delDone.querySelector('a').className='btn btn-light';
+    delDone.querySelector('a').setAttribute('id','delDone');
+    btn.appendChild(delAll);
+    btn.appendChild(delDone);
+    document.querySelector('.container').insertBefore(btn,document.querySelector('#linear'));
+  }
 }
 
 module.exports = new Help;
