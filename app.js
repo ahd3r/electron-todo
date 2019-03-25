@@ -17,7 +17,7 @@ app.on('ready',()=>{
   }else if(process.env.NODE_ENV==='prod'){
     Menu.setApplicationMenu(null);
   }
-  mainWin = new BrowserWindow({show:false,resizable:false,useContentSize:true});
+  mainWin = new BrowserWindow({height:620,show:false,resizable:false,useContentSize:true});
   mainWin.once('ready-to-show',()=>{
     mainWin.show();
   });
