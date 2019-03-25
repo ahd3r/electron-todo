@@ -61,11 +61,13 @@ if(myTasks.length===0){
         }else{
           if(tasks[parseInt(e.target.parentElement.parentElement.classList[1].slice(-1))].done){
             tasks[parseInt(e.target.parentElement.parentElement.classList[1].slice(-1))].done=false;
+            task.className=`list-group-item t-${tasks.indexOf(myTask)}`;
           }else{
             tasks[parseInt(e.target.parentElement.parentElement.classList[1].slice(-1))].done=true;
+            task.className=`list-group-item t-${tasks.indexOf(myTask)} done`;
           }
           localStorage.setItem('tasks',JSON.stringify(tasks));
-          ipcRenderer.send('entered');        
+          // ipcRenderer.send('entered');
         }
       }
     });
