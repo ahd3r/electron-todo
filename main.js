@@ -47,20 +47,36 @@ if(myTasks.length===0){
     }else{
       task.className = `list-group-item t-${tasks.indexOf(myTask)}`;
     }
-    task.textContent = myTask.call;
+    task.appendChild(document.createElement('div'));
+    task.querySelector('div').className='row';
+    task.querySelector('.row').appendChild(document.createElement('div')).className='col-10';
+    task.querySelector('.row').appendChild(document.createElement('div')).className='col text-right';
+    task.querySelector('.row>.col-10').textContent = myTask.call;
+    task.querySelector('.row>.col').appendChild(document.createElement('i')).className='material-icons';
+    task.querySelector('.row>.col>.material-icons').textContent='edit';
     task.addEventListener('click',(e)=>{
-      if(tasks[parseInt(e.target.classList[1].slice(-1))].done){
-        tasks[parseInt(e.target.classList[1].slice(-1))].done=false;
-      }else{
-        tasks[parseInt(e.target.classList[1].slice(-1))].done=true;
+      if(!document.querySelector('.close')){
+        if(e.target.className==='material-icons'){
+          helpers.formEdit(parseInt(e.target.parentElement.parentElement.parentElement.classList[1].slice(-1)),myTask.call);
+        }else{
+          if(tasks[parseInt(e.target.parentElement.parentElement.classList[1].slice(-1))].done){
+            tasks[parseInt(e.target.parentElement.parentElement.classList[1].slice(-1))].done=false;
+          }else{
+            tasks[parseInt(e.target.parentElement.parentElement.classList[1].slice(-1))].done=true;
+          }
+          localStorage.setItem('tasks',JSON.stringify(tasks));
+          ipcRenderer.send('entered');        
+        }
       }
-      localStorage.setItem('tasks',JSON.stringify(tasks));
-      ipcRenderer.send('entered');
     });
     task.addEventListener('dblclick',(e)=>{
-      tasks.splice(parseInt(e.target.classList[1].slice(-1)),1);
-      localStorage.setItem('tasks',JSON.stringify(tasks));
-      ipcRenderer.send('entered');
+      if(!document.querySelector('.close')){
+        if(e.target.className!=='material-icons'){
+          tasks.splice(parseInt(e.target.parentElement.parentElement.classList[1].slice(-1)),1);
+          localStorage.setItem('tasks',JSON.stringify(tasks));
+          ipcRenderer.send('entered');
+        }
+      }
     });
     list.appendChild(task);
   });

@@ -50,6 +50,49 @@ class Help{
     btn.appendChild(delDone);
     document.querySelector('.container').insertBefore(btn,document.querySelector('#linear'));
   }
+  formEdit(taskId,calling){
+    while(document.querySelector(`.t-${taskId}>.row`).firstChild){
+      document.querySelector(`.t-${taskId}>.row`).firstChild.remove();
+    }
+    document.querySelector(`.t-${taskId}>.row`).appendChild(document.createElement('div')).className='col-10';
+    document.querySelector(`.t-${taskId}>.row`).appendChild(document.createElement('div')).className='col text-right';
+    const form = document.createElement('form');
+    form.className = 'editT form-inline';
+    form.appendChild(document.createElement('input')).className='form-control';
+    form.querySelector('.form-control').value = calling;
+    form.querySelector('.form-control').setAttribute('type','text');
+    form.querySelector('.form-control').setAttribute('placeholder','New task call');
+    form.appendChild(document.createElement('button')).appendChild(document.createElement('i')).className='material-icons';
+    form.querySelector('.material-icons').textContent='done';
+    form.querySelector('button').className='btn';
+    form.querySelector('button').type='submit';
+    document.querySelector(`.t-${taskId}>.row>.col-10`).appendChild(form);
+    document.querySelector(`.t-${taskId}>.row>.col`).appendChild(document.createElement('i')).className='material-icons close';
+    document.querySelector(`.t-${taskId}>.row>.col>.material-icons`).textContent='close';
+    document.querySelector('.editT').addEventListener('submit',(e)=>{
+      const newCall = document.querySelector('.editT>.form-control').value;
+      if(newCall && newCall.length <= 40){
+        const tasks = JSON.parse(localStorage.getItem('tasks'));
+        tasks[taskId].call=newCall;
+        localStorage.setItem('tasks',JSON.stringify(tasks));
+        ipcRenderer.send('entered');
+      }else if(newCall.length>40){
+        this.showAlert('Make it less','red');
+        setTimeout(()=>{
+          document.querySelector('.alert').remove();
+        },3000);
+      }else{
+        this.showAlert('Must be some text','red');
+        setTimeout(()=>{
+          document.querySelector('.alert').remove();
+        },3000);
+      }
+      e.preventDefault();
+    });
+    document.querySelector('.close').addEventListener('click',()=>{
+      ipcRenderer.send('entered');
+    });
+  }
 }
 
 module.exports = new Help;

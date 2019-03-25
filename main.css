@@ -4,3 +4,6 @@ a:hover{
 .done{
   text-decoration:line-through;
 }
+i:hover{
+  cursor: pointer;
+}
